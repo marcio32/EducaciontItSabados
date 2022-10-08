@@ -1,4 +1,4 @@
-﻿using EducaciontItSabados.Models;
+﻿using EducaciontItSabados.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
