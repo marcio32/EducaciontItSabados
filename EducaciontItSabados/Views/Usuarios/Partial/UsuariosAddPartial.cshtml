@@ -1,0 +1,26 @@
+﻿@model UsuariosViewModel
+
+<div class="modal fade" id="usuarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Alta y/o modificación de Usuarios.</h5>
+            </div>
+            <div class="modal-body">
+             @using (Html.BeginForm("GuardarUsuario", "Usuarios", FormMethod.Post))
+             {
+                 <div class="row">
+                     <div class="col-md-6 mt-1 mb-3">
+                         <label class="col-md-6 form-control-label">Nombre</label>
+                         @Html.EditorFor(x=> x.Nombre, new {htmlAttributes = new {@Class = "col-md-9 form-control", @required="required"}})
+                     </div>
+                     <div class="col-md-6 mt-1 mb-3">
+                          <label class="col-md-6 form-control-label">Apellido</label>
+                          @Html.EditorFor(x=> x.Apellido, new {htmlAttributes = new {@Class = "col-md-9 form-control", @required="required"}})
+                     </div>
+                 </div>
+             }
+            </div>
+         </div>
+     </div>
+</div>

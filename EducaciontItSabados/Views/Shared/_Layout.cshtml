@@ -5,13 +5,19 @@
 	 <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - EducaciontItSabados</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/EducaciontItSabados.styles.css" asp-append-version="true" />
+	<link href="~/lib/datatables-bootstrap5/dist/css/datatables.bootstrap5.min.css" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/jquery-datatable/jquery.datatables.min.js"></script>
+    <script src="~/lib/datatables-bootstrap5/dist/js/datatables.bootstrap5.min.js"></script>
+	<script src="~/lib/moment/moment.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -31,7 +37,7 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" asp-controller="Usuarios" asp-action="Usuarios">
 			  <i class="align-middle" data-feather="user"></i> <span class="align-middle">Usuarios</span>
 			</a>
 					</li>
@@ -69,12 +75,10 @@
 				@RenderBody()
 			</main>
 
-			
+		
 		</div>
 	</div>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
+	
 	@await RenderSectionAsync("Scripts", required: false)
 
 </body>

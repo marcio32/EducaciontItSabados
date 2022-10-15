@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,18 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-	internal class ApplicationDbContext
+	public class ApplicationDbContext : DbContext
 	{
-	}
+		public ApplicationDbContext() : base(){}
+
+		public static string ConnectionString { get; set; }
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+
+            optionsBuilder.UseSqlServer(ConnectionString);
+        }
+
+		public DbSet<Usuarios> Usuarios { get; set; }
+    }
 }

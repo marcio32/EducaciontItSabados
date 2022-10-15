@@ -8,5 +8,10 @@ namespace EducaciontItSabados.Controllers
 		{
 			return View();
 		}
-	}
+
+        public IActionResult UsuariosAddPartial()
+        {
+            return PartialView("~/Views/Usuarios/Partial/UsuariosAddPartial.cshtml");
+        }
+    }
 }
