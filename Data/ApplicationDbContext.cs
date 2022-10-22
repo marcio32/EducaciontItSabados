@@ -16,10 +16,11 @@ namespace Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-
+			optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             optionsBuilder.UseSqlServer(ConnectionString);
         }
 
 		public DbSet<Usuarios> Usuarios { get; set; }
+		public DbSet<Roles> Roles { get; set; }
     }
 }

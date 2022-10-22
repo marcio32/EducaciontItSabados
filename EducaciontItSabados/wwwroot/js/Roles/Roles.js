@@ -1,23 +1,13 @@
-﻿var tablaUsuarios
+﻿var tablaRoles
 $(document).ready(function () {
-    tablaUsuarios = $('#usuarios').DataTable({
+    tablaRoles = $('#roles').DataTable({
         ajax: {
-            url: 'https://localhost:7187/api/usuarios/buscarusuarios',
+            url: 'https://localhost:7187/api/roles/buscarroles',
             dataSrc: ''
         },
         columns: [
             { data: 'id', title: 'Id' },
             { data: 'nombre', title: 'Nombre' },
-            { data: 'apellido', title: 'Apellido' },
-            {
-                data: function (row) {
-                    debugger
-                    return moment(row.fecha_Nacimiento).format("DD/MM/YYYY")
-                }, title: 'Fecha de nacimiento'
-            },
-            { data: 'clave', title: 'Clave' },
-            { data: 'mail', title: 'Mail' },
-            { data: 'id_Rol', title: 'Rol' },
             {
                 data: function (row) {
                     return row.activo == true ? "Si" : "No";
@@ -26,8 +16,8 @@ $(document).ready(function () {
             {
                 data: function (row) {
                     var botones =
-                        `<td><a href='javascript:EditarUsuario(${JSON.stringify(row)})' <i class="fa-solid fa-pen-to-square editarUsuario"></i></td>` +
-                        `<td><a href='javascript:EliminarUsuario(${JSON.stringify(row)})' <i class="fa-solid fa-trash eliminarUsuario"></i></td>`
+                        `<td><a href='javascript:EditarRol(${JSON.stringify(row)})' <i class="fa-solid fa-pen-to-square editarRol"></i></td>` +
+                        `<td><a href='javascript:EliminarRol(${JSON.stringify(row)})' <i class="fa-solid fa-trash eliminarRol"></i></td>`
                     return botones;
 
                 }
@@ -40,38 +30,38 @@ $(document).ready(function () {
     });
 });
 
-function GuardarUsuario() {
+function GuardarRol() {
     $.ajax({
         type: "POST",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Roles/RolesAddPartial",
         data: "",
         contentType: "application/json",
         dataType: "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado)
-            $('#usuarioModal').modal('show');
+            $('#rolesAddPartial').html(resultado)
+            $('#rolModal').modal('show');
         }
     })
 }
 
-function EditarUsuario(row) {
+function EditarRol(row) {
     $.ajax({
         type: "POST",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Roles/RolesAddPartial",
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado)
-            $('#usuarioModal').modal('show');
+            $('#rolesAddPartial').html(resultado)
+            $('#rolModal').modal('show');
         }
     })
 }
 
-function EliminarUsuario(row) {
+function EliminarRol(row) {
     Swal.fire({
         title: 'Estas Seguro?',
-        text: "Vas a eliminar al usuario!",
+        text: "Vas a eliminar al rol!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -82,17 +72,17 @@ function EliminarUsuario(row) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: "/Usuarios/EliminarUsuario",
+                url: "/Roles/EliminarRol",
                 data: JSON.stringify(row),
                 contentType: "application/json",
                 dataType: "html",
                 success: function () {
                     Swal.fire(
                         'Eliminado!',
-                        'Se elimino el usuario.',
+                        'Se elimino el rol.',
                         'success'
                     )
-                    tablaUsuarios.ajax.reload();
+                    tablaRoles.ajax.reload();
                 }
             })
 
