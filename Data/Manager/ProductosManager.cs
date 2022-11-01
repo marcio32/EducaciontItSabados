@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace Data.Manager
 {
-    public class UsuariosManager : BaseManager<Usuarios>
+    public class ProductosManager : BaseManager<Productos>
     {
-        public override Task<List<Usuarios>> Borrar(Usuarios entity)
+        public override Task<List<Productos>> Borrar(Productos entity)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<List<Usuarios>> BuscarAsync(Usuarios entity)
+        public override Task<List<Productos>> BuscarAsync(Productos entity)
         {
             throw new NotImplementedException();
         }
 
-        public async override Task<List<Usuarios>> BuscarListaAsync()
+        public async override Task<List<Productos>> BuscarListaAsync()
         {
-            return await contextSingleton.Usuarios.Where(x => x.Activo == true).Include(x=> x.Roles).ToListAsync();
+            return await contextSingleton.Productos.Where(x => x.Activo == true).ToListAsync();
         }
     }
 }

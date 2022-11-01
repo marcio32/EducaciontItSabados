@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducaciontItSabados.ViewModels
 {
@@ -13,6 +14,7 @@ namespace EducaciontItSabados.ViewModels
         public int Id_Rol { get; set; }
         public bool Activo { get; set; }
         public int Codigo { get; set; }
+        public IEnumerable<SelectListItem> Lista_Roles { get; set; }
 
         public static implicit operator UsuariosViewModel(Usuarios usuario)
         {

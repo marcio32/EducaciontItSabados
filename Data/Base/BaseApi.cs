@@ -36,5 +36,25 @@ namespace Data.Base
 				return BadRequest(ex.Message);
 			}
 		}
-	}
+
+        public async Task<IActionResult> GetToApi(string ControllerMethodUrl)
+        {
+            try
+            {
+                var client = _httpClient.CreateClient("useApi");
+
+                var response = await client.GetAsync(ControllerMethodUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+                return BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+    }
 }

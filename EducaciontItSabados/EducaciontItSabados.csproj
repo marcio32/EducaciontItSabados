@@ -7,16 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Productos\Partial\" />
+    <Compile Include="wwwroot\images\ViewModels\ErrorViewModel.cs" />
+    <Compile Include="wwwroot\images\ViewModels\ProductosViewModel.cs" />
+    <Compile Include="wwwroot\images\ViewModels\RolesViewModel.cs" />
+    <Compile Include="wwwroot\images\ViewModels\UsuariosViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\css\Inicio\" />
-    <Folder Include="wwwroot\css\Productos\" />
     <Folder Include="wwwroot\js\Utils\" />
-    <Folder Include="wwwroot\js\Productos\" />
     <Folder Include="wwwroot\js\Inicio\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Productos\Partial\ProductosAddPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Productos\Productos.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

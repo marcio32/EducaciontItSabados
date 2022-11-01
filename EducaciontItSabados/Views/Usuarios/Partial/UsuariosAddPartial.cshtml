@@ -41,8 +41,17 @@
                           <label class="col-md-6 form-control-label">Rol</label>
                           <select name="Id_Rol" required class="col-md-9 form-control">
                               <option value="">Selecciona...</option>
-                              <option value="1">Administrador...</option>
-                              <option value="2">Usuario...</option>
+                                @{
+                                    foreach (var item in Model.Lista_Roles)
+                                    {
+                                        if (Model.Id_Rol != null && item.Value == Model.Id_Rol.ToString()) {
+                                            item.Selected = true;
+                                            <option value=@item.Value selected>@item.Text</option>
+                                        }else{
+                                            <option value=@item.Value>@item.Text</option>
+                                        }
+                                    }
+                               }
                           </select>
                      </div>
                  </div>
