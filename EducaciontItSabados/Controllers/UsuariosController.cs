@@ -1,4 +1,5 @@
-﻿using Data.Base;
+﻿using Common.Helpers;
+using Data.Base;
 using Data.Entities;
 using EducaciontItSabados.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,12 @@ namespace EducaciontItSabados.Controllers
             var resultadoRoles = roles as OkObjectResult;
 
             if (usuario != null)
+            {
+                usuario.Clave = EncryptHelper.Desencriptar(usuario.Clave);
                 usuViewModel = usuario;
+               
+            }
+                
 
             if (resultadoRoles != null)
             {

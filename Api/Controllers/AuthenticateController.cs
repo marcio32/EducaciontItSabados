@@ -1,4 +1,5 @@
 ﻿using Api.Services;
+using Common.Helpers;
 using Data;
 using Data.Dtos;
 using Data.Entities;
@@ -22,7 +23,7 @@ namespace Api.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(LoginDto usuario)
         {
-
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
             var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == usuario.Mail && x.Clave == usuario.Clave).FirstOrDefault();
 
             if(validarUsuario != null)

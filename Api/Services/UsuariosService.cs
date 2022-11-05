@@ -32,6 +32,7 @@ namespace Api.Services
         {
             try
             {
+                usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
                 var result = await _manager.Guardar(usuario, usuario.Id);
                 return await _manager.BuscarListaAsync();
             }

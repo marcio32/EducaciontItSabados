@@ -9,7 +9,7 @@ $(document).ready(function () {
             { data: 'id', title: 'Id' },
             {
                 data: 'imagen', render: function (data) {
-                    if (data != "") {
+                    if (data != "" && data != null) {
                         return `<img src="data:image/jpeg;base64,${data}" width="100px" heigth="100px" style="border-radius:15px">`
                     } else {
                         return `<img src="/images/Image_not_available.png" width="100px" heigth="100px" style="background-color:white; border-radius:15px">`

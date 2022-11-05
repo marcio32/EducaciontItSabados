@@ -10,7 +10,8 @@ namespace EducaciontItSabados.Controllers
     public class LoginController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
-        public LoginController(IHttpClientFactory httpClient)
+        public LoginController(IHttpClientFactory
+            httpClient)
         {
             _httpClient = httpClient;
         }

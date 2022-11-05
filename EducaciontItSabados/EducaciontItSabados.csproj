@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="wwwroot\images\ViewModels\ErrorViewModel.cs" />
-    <Compile Include="wwwroot\images\ViewModels\ProductosViewModel.cs" />
-    <Compile Include="wwwroot\images\ViewModels\RolesViewModel.cs" />
-    <Compile Include="wwwroot\images\ViewModels\UsuariosViewModel.cs" />
+    <Content Include="ViewModels\ErrorViewModel.cs" />
+    <Content Include="ViewModels\ProductosViewModel.cs" />
+    <Content Include="ViewModels\RolesViewModel.cs" />
+    <Content Include="ViewModels\UsuariosViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
