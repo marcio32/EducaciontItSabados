@@ -2,6 +2,7 @@
 using Data.Base;
 using Data.Entities;
 using EducaciontItSabados.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -15,6 +16,8 @@ namespace EducaciontItSabados.Controllers
         {
             _httpClient = httpClient;
         }
+
+        [Authorize]
         public IActionResult Usuarios()
         {
             return View();

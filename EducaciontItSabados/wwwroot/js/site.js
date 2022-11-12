@@ -1,7 +1,7 @@
 ﻿(function ($) {
     debugger
     var pathname = window.location.pathname,
-        paginas = ['/Home/Index', '/Usuarios/Usuarios', '/Roles/Roles', '/Productos/Productos'];
+        paginas = ['/Home/Index', '/Usuarios/Usuarios', '/Roles/Roles', '/Productos/Productos', '/Servicios/Servicios'];
     $('.sidebar-item').each(function (i) {
         if (pathname.includes(paginas[i]))
             $(this).addClass('active');

@@ -1,6 +1,7 @@
 ﻿using Data.Base;
 using Data.Entities;
 using EducaciontItSabados.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EducaciontItSabados.Contproductolers
@@ -12,6 +13,8 @@ namespace EducaciontItSabados.Contproductolers
         {
             _httpClient = httpClient;
         }
+
+        [Authorize]
         public IActionResult Productos()
 		{
 			return View();

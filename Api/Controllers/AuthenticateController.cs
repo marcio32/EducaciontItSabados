@@ -4,6 +4,7 @@ using Data;
 using Data.Dtos;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -24,15 +25,15 @@ namespace Api.Controllers
         public async Task<IActionResult> Login(LoginDto usuario)
         {
             usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == usuario.Mail && x.Clave == usuario.Clave).FirstOrDefault();
+            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == usuario.Mail && x.Clave == usuario.Clave).Include(x => x.Roles).FirstOrDefault();
 
             if(validarUsuario != null)
             {
-                return Ok("true");
+                return Ok(validarUsuario.Nombre + ";" + validarUsuario.Roles.Nombre + ";" + validarUsuario.Mail);
             }
             else
             {
-                return Ok("false");
+                return Unauthorized();
             }
         }
 
