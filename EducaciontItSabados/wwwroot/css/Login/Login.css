@@ -11674,3 +11674,9 @@ textarea.form-control {
                 background: #fbceb5;
                 color: #fff;
             }
+
+
+.error-login {
+    font-weight: bold;
+    text-align: center;
+}

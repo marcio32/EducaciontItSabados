@@ -38,18 +38,15 @@
 	            	<button type="submit" class="form-control btn btn-primary submit px-3">Ingresar</button>
 	            </div>
 				 <div class="form-group">
-	            	<p>@ViewBag.ErrorLogin</p>
+	            	<p class="error-login">@ViewBag.ErrorLogin</p>
 	            </div>
 	            <div class="form-group d-md-flex">
-	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Recuerdame
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-									</label>
-								</div>
-								<div class="w-50 text-md-right">
-									<a href="#" style="color: #fff">Olvido su contraseña</a>
-								</div>
+					<div class="w-50 text-md-left">
+						<a style="color: #fff" asp-controller="Login" asp-action="CrearCuenta">Crear Cuenta</a>
+					</div>
+					<div class="w-50 text-md-right">
+						<a style="color: #fff" asp-controller="Login" asp-action="OlvidoClave">Olvido su contraseña</a>
+					</div>
 	            </div>
 	          </form>
 	          <p class="w-100 text-center">&mdash; O ingresar con &mdash;</p>
