@@ -30,16 +30,18 @@ namespace EducaciontItSabados.Controllers
 
 		public async Task<IActionResult> GuardarRol(Roles rol)
 		{
-			var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol);
+            var token = HttpContext.Session.GetString("Token");
+            var baseApi = new BaseApi(_httpClient);
+            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol, token);
             return RedirectToAction("Roles", "Roles");
 		}
 
         public async Task<IActionResult> EliminarRol([FromBody] Roles rol)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
             rol.Activo = false;
-            var roles = await baseApi.PostToApi("Roles/EliminarRol", rol);
+            var roles = await baseApi.PostToApi("Roles/EliminarRol", rol, token);
             return RedirectToAction("Roles", "Roles");
         }
     }

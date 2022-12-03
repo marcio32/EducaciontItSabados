@@ -1,9 +1,11 @@
 ﻿var tablaRoles
 $(document).ready(function () {
+    var token = getCookie("Token");
     tablaRoles = $('#roles').DataTable({
         ajax: {
             url: 'https://localhost:7187/api/roles/buscarroles',
-            dataSrc: ''
+            dataSrc: '',
+            headers: {"Authorization": "Bearer " + token}
         },
         columns: [
             { data: 'id', title: 'Id' },

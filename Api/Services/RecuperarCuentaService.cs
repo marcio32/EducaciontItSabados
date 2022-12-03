@@ -23,7 +23,6 @@ namespace Api.Services
             }
 			catch(Exception ex)
 			{
-                GenerateLogHelper.LogError(ex, "RecuperarCuentaService", "BuscarUsuarios");
                 throw ex;
             }
         }
@@ -37,7 +36,6 @@ namespace Api.Services
 			}
 			catch(Exception ex)
 			{
-                GenerateLogHelper.LogError(ex, "RecuperarCuentaService", "GuardarCodigo");
                 throw ex;
             }
 		}

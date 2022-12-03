@@ -25,9 +25,10 @@ namespace EducaciontItSabados.Controllers
 
         public async Task<IActionResult> UsuariosAddPartial([FromBody] Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var usuViewModel = new UsuariosViewModel();
             var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.GetToApi("Roles/BuscarRoles");
+            var roles = await baseApi.GetToApi("Roles/BuscarRoles", token);
             var resultadoRoles = roles as OkObjectResult;
 
             if (usuario != null)
@@ -54,16 +55,18 @@ namespace EducaciontItSabados.Controllers
 
         public async Task<IActionResult> GuardarUsuario(Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario);
+            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
             return RedirectToAction("Usuarios", "Usuarios");
         }
 
         public async Task<IActionResult> EliminarUsuario([FromBody] Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
             usuario.Activo = false;
-            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuario);
+            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuario, token);
             return RedirectToAction("Usuarios", "Usuarios");
         }
     }

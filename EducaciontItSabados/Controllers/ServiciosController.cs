@@ -31,15 +31,17 @@ namespace EducaciontItSabados.Controllers
 		public async Task<IActionResult> GuardarServicio(Servicios servicio)
 		{
 			var baseApi = new BaseApi(_httpClient);
-            var servicios = await baseApi.PostToApi("Servicios/GuardarServicio", servicio);
+            var token = HttpContext.Session.GetString("Token");
+            var servicios = await baseApi.PostToApi("Servicios/GuardarServicio", servicio, token);
             return RedirectToAction("Servicios", "Servicios");
 		}
 
         public async Task<IActionResult> EliminarServicio([FromBody] Servicios servicio)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
             servicio.Activo = false;
-            var servicios = await baseApi.PostToApi("Servicios/EliminarServicio", servicio);
+            var servicios = await baseApi.PostToApi("Servicios/EliminarServicio", servicio, token);
             return RedirectToAction("Servicios", "Servicios");
         }
     }

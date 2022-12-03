@@ -42,7 +42,6 @@ namespace Api.Controllers
             }
 			catch (Exception ex)
 			{
-                GenerateLogHelper.LogError(ex, "RecuperarCuentaController", "GuardarCodigo");
                 throw ex;
             }
 		}
@@ -68,7 +67,6 @@ namespace Api.Controllers
 			}
 			catch (Exception ex)
 			{
-                GenerateLogHelper.LogError(ex, "RecuperarCuentaController", "CambiarClave");
                 throw ex;
             }
 		}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,17 @@ namespace Data.Base
 			_httpClient = httpClient;
 		}
 
-		public async Task<IActionResult> PostToApi(string ControllerMethodUrl, object model)
+		public async Task<IActionResult> PostToApi(string ControllerMethodUrl, object model, string token)
 		{
 			try
 			{
 				var client = _httpClient.CreateClient("useApi");
+
+				if(token != "")
+				{
+					client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+                }
 
 				var response = await client.PostAsJsonAsync(ControllerMethodUrl, model);
 				if (response.IsSuccessStatusCode)
@@ -37,11 +44,17 @@ namespace Data.Base
 			}
 		}
 
-        public async Task<IActionResult> GetToApi(string ControllerMethodUrl)
+        public async Task<IActionResult> GetToApi(string ControllerMethodUrl, string token)
         {
             try
             {
                 var client = _httpClient.CreateClient("useApi");
+
+                if (token != "")
+				{
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+                }
 
                 var response = await client.GetAsync(ControllerMethodUrl);
                 if (response.IsSuccessStatusCode)

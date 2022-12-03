@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\Inicio\" />
-    <Folder Include="wwwroot\js\Utils\" />
-    <Folder Include="wwwroot\js\Inicio\" />
   </ItemGroup>
 
   <ItemGroup>

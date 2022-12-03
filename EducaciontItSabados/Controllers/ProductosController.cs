@@ -30,7 +30,9 @@ namespace EducaciontItSabados.Contproductolers
 
 		public async Task<IActionResult> GuardarProducto(Productos producto)
 		{
-			var baseApi = new BaseApi(_httpClient);
+
+            var token = HttpContext.Session.GetString("Token");
+            var baseApi = new BaseApi(_httpClient);
             if(producto.Imagen_Archivo != null && producto.Imagen_Archivo.Length > 0)
             {
                 using (var ms = new MemoryStream())
@@ -41,15 +43,16 @@ namespace EducaciontItSabados.Contproductolers
                 }
             }
             producto.Imagen_Archivo = null;
-            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto);
+            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto, token);
             return RedirectToAction("Productos", "Productos");
 		}
 
         public async Task<IActionResult> EliminarProducto([FromBody] Productos producto)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
             producto.Activo = false;
-            var productos = await baseApi.PostToApi("Productos/EliminarProducto", producto);
+            var productos = await baseApi.PostToApi("Productos/EliminarProducto", producto, token);
             return RedirectToAction("Productos", "Productos");
         }
     }
