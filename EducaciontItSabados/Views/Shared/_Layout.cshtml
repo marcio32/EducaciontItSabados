@@ -20,6 +20,7 @@
     <script src="https://kit.fontawesome.com/f8fcaa487b.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/utils/utils.js"></script>
+    <script src="~/lib/microsoft/signalr/signalr.js"></script>
 
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
@@ -60,6 +61,12 @@
                       <li class="sidebar-item">
                         <a class="sidebar-link" asp-controller="Servicios" asp-action="Servicios">
               <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Servicios</span>
+            </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-controller="Chat" asp-action="Chat">
+              <i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Chat</span>
             </a>
                     </li>
 

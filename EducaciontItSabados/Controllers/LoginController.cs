@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication;
 using System.Net.Mail;
 using System.Net;
 using EducaciontItSabados.ViewModels;
+using Microsoft.AspNetCore.Authentication.Google;
+using EducaciontItSabados.Services;
 
 namespace EducaciontItSabados.Controllers
 {
@@ -104,10 +106,10 @@ namespace EducaciontItSabados.Controllers
 
             var baseApi = new BaseApi(_httpClient);
             var token = HttpContext.Session.GetString("Token");
-            var response = await baseApi.PostToApi("RecuperarCuenta/GuardarCodigo", login,token);
+            var response = await baseApi.PostToApi("RecuperarCuenta/GuardarCodigo", login, token);
             var resultadoLogin = response as OkObjectResult;
 
-            if(resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
+            if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
             {
                 MailMessage mail = new();
 
@@ -150,7 +152,7 @@ namespace EducaciontItSabados.Controllers
             var token = HttpContext.Session.GetString("Token");
             var response = await baseApi.PostToApi("RecuperarCuenta/CambiarClave", login, token);
             var resultadoLogin = response as OkObjectResult;
-            if(resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
+            if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -178,5 +180,52 @@ namespace EducaciontItSabados.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
+
+        public async Task LoginGoogle()
+        {
+            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var resultado = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claims = resultado.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Value,
+                claim.Type,
+                claim.Issuer,
+                claim.OriginalIssuer
+            });
+            var login = new LoginDto();
+            login.Mail = claims.ToList()[4].Value;
+
+            var usuarioServicio = new UsuarioService();
+            var usuario = usuarioServicio.BuscarUsuario(login).Result;
+
+            if (usuario != null)
+            {
+                var baseApi = new BaseApi(_httpClient);
+                var token = await baseApi.PostToApi("Authenticate/LoginGoogle", login, "");
+                var resultadoLogin = token as OkObjectResult;
+
+                var resultadoSplit = resultadoLogin.Value.ToString().Split(";");
+                ViewBag.NombreUsuario = resultadoSplit[1];
+                HttpContext.Session.SetString("Token", resultadoSplit[0]);
+                var homeViewModel = new HomeViewModel();
+                homeViewModel.Token = resultadoSplit[0];
+                return View("~/Views/Home/Index.cshtml", homeViewModel);
+
+            }
+            else
+            {
+                TempData["ErrorLogin"] = "El usuario no existe";
+                return RedirectToAction("Login", "Login");
+            }
+        }
+
     }
 }

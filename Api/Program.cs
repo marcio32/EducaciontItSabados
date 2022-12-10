@@ -47,6 +47,7 @@ option.AddSecurityDefinition("Bearer",
             new string[]{}
         }
     });
+
 });
 
 ApplicationDbContext.ConnectionString = builder.Configuration.GetConnectionString("ApplicationDbContext");

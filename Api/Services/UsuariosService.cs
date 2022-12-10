@@ -31,8 +31,16 @@ namespace Api.Services
         {
             try
             {
+                var existe = await _manager.BuscarUsuarioAsync(usuario);
                 usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-                var result = await _manager.Guardar(usuario, usuario.Id);
+                if (existe != null)
+                {
+                    return await _manager.BuscarListaAsync();
+                }
+                else
+                {
+                    var result = await _manager.Guardar(usuario, usuario.Id);
+                }
                 return await _manager.BuscarListaAsync();
             }
             catch (Exception ex)
