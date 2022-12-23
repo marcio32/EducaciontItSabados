@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using Data.Dtos;
+using Data.Entities;
 
 namespace EducaciontItSabados.ViewModels
 {
@@ -12,7 +13,7 @@ namespace EducaciontItSabados.ViewModels
         public bool Activo { get; set; }
         public IFormFile? Imagen_Archivo {get; set; }
 
-        public static implicit operator ProductosViewModel(Productos producto)
+        public static implicit operator ProductosViewModel(ProductosDto producto)
         {
             var productoViewModel = new ProductosViewModel();
             productoViewModel.Id = producto.Id;

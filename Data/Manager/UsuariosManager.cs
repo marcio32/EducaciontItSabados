@@ -13,7 +13,7 @@ namespace Data.Manager
 {
     public class UsuariosManager : BaseManager<Usuarios>
     {
-        public override Task<List<Usuarios>> Borrar(Usuarios entity)
+        public override Task<bool> Borrar(Usuarios entity)
         {
             throw new NotImplementedException();
         }

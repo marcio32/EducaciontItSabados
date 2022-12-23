@@ -1,4 +1,5 @@
 ﻿using Api.Services;
+using Data.Dtos;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("GuardarProducto")]
-        public async Task<List<Productos>> GuardarProducto(Productos productos)
+        public async Task<bool> GuardarProducto(ProductosDto productos)
         {
             var guardarProducto = new ProductosService();
             return await guardarProducto.GuardarProductoASync(productos);
@@ -29,7 +30,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("EliminarProducto")]
-        public async Task<List<Productos>> EliminarProducto(Productos productos)
+        public async Task<bool> EliminarProducto(ProductosDto productos)
         {
             var guardarProducto = new ProductosService();
             return await guardarProducto.EliminarProductoASync(productos);

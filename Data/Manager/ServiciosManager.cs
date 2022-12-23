@@ -11,10 +11,10 @@ namespace Data.Manager
 {
     public class ServiciosManager : BaseManager<Servicios>
     {
-        public async override Task<List<Servicios>> Borrar(Servicios servicio)
+        public async override Task<bool> Borrar(Servicios servicio)
         {
-            contextSingleton.Database.ExecuteSqlRaw($"EliminarServicio {servicio.Id}");
-            return contextSingleton.Servicios.FromSqlRaw("ObtenerServicios").ToList();
+            var respuesta = contextSingleton.Database.ExecuteSqlRaw($"EliminarServicio {servicio.Id}");
+            return respuesta == 1 ? true : false;
         }
 
         public override Task<List<Servicios>> BuscarAsync(Servicios entity)
@@ -22,10 +22,10 @@ namespace Data.Manager
             throw new NotImplementedException();
         }
 
-        public async Task<List<Servicios>> GuardarAsync (Servicios servicio)
+        public async Task<bool> GuardarAsync (Servicios servicio)
         {
-            var p = contextSingleton.Database.ExecuteSqlRaw($"GuardaroActualizarServicios {servicio.Id}, {servicio.Nombre}, {servicio.Activo}");
-            return contextSingleton.Servicios.FromSqlRaw("ObtenerServicios").ToList();
+            var respuesta = contextSingleton.Database.ExecuteSqlRaw($"GuardaroActualizarServicios {servicio.Id}, {servicio.Nombre}, {servicio.Activo}");
+            return respuesta == 1 ? true : false;
         }
 
         public async override Task<List<Servicios>> BuscarListaAsync()

@@ -1,4 +1,5 @@
 ﻿using Data.Base;
+using Data.Dtos;
 using Data.Entities;
 using EducaciontItSabados.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -20,28 +21,28 @@ namespace EducaciontItSabados.Controllers
 			return View();
 		}
 
-        public IActionResult RolesAddPartial([FromBody]Roles rol)
+        public IActionResult RolesAddPartial([FromBody]RolesDto rolDto)
         {
             var usuViewModel = new RolesViewModel();
-            if (rol != null)
-                usuViewModel = rol;
+            if (rolDto != null)
+                usuViewModel = rolDto;
             return PartialView("~/Views/Roles/Partial/RolesAddPartial.cshtml", usuViewModel);
         }
 
-		public async Task<IActionResult> GuardarRol(Roles rol)
+		public async Task<IActionResult> GuardarRol(RolesDto rolDto)
 		{
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol, token);
+            var roles = await baseApi.PostToApi("Roles/GuardarRol", rolDto, token);
             return RedirectToAction("Roles", "Roles");
 		}
 
-        public async Task<IActionResult> EliminarRol([FromBody] Roles rol)
+        public async Task<IActionResult> EliminarRol([FromBody] RolesDto rolDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            rol.Activo = false;
-            var roles = await baseApi.PostToApi("Roles/EliminarRol", rol, token);
+            rolDto.Activo = false;
+            var roles = await baseApi.PostToApi("Roles/EliminarRol", rolDto, token);
             return RedirectToAction("Roles", "Roles");
         }
     }

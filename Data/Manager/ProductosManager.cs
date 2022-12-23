@@ -11,7 +11,7 @@ namespace Data.Manager
 {
     public class ProductosManager : BaseManager<Productos>
     {
-        public override Task<List<Productos>> Borrar(Productos entity)
+        public override Task<bool> Borrar(Productos entity)
         {
             throw new NotImplementedException();
         }

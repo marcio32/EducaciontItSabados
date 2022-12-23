@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using Data.Dtos;
+using Data.Entities;
 
 namespace EducaciontItSabados.ViewModels
 {
@@ -8,7 +9,7 @@ namespace EducaciontItSabados.ViewModels
         public string Nombre { get; set; }
         public bool Activo { get; set; }
 
-        public static implicit operator RolesViewModel(Roles rol)
+        public static implicit operator RolesViewModel(RolesDto rol)
         {
             var rolViewModel = new RolesViewModel();
             rolViewModel.Id = rol.Id;

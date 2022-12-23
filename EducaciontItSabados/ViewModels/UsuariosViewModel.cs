@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using Data.Dtos;
+using Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducaciontItSabados.ViewModels
@@ -16,7 +17,7 @@ namespace EducaciontItSabados.ViewModels
         public int Codigo { get; set; }
         public IEnumerable<SelectListItem> Lista_Roles { get; set; }
 
-        public static implicit operator UsuariosViewModel(Usuarios usuario)
+        public static implicit operator UsuariosViewModel(UsuarioDto usuario)
         {
             var usuViewModel = new UsuariosViewModel();
             usuViewModel.Id = usuario.Id;

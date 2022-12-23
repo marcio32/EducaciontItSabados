@@ -28,7 +28,7 @@ namespace Data.Manager
 
         }
 
-        public override Task<List<Usuarios>> Borrar(Usuarios usuario)
+        public override Task<bool> Borrar(Usuarios usuario)
 		{
 			throw new NotImplementedException();
 		}

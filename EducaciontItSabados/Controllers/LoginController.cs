@@ -12,6 +12,10 @@ using System.Net;
 using EducaciontItSabados.ViewModels;
 using Microsoft.AspNetCore.Authentication.Google;
 using EducaciontItSabados.Services;
+using Api.Controllers;
+using Web.Services;
+using Common.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace EducaciontItSabados.Controllers
 {
@@ -104,12 +108,16 @@ namespace EducaciontItSabados.Controllers
 
             login.Codigo = codigo;
 
-            var baseApi = new BaseApi(_httpClient);
-            var token = HttpContext.Session.GetString("Token");
-            var response = await baseApi.PostToApi("RecuperarCuenta/GuardarCodigo", login, token);
-            var resultadoLogin = response as OkObjectResult;
+            var recuperarCuenta = new RecuperarCuentaService();
+            var usuario = recuperarCuenta.BuscarUsuarios(login);
+            var resultadoLogin = false;
+            if (usuario != null)
+            {
+                usuario.Codigo = login.Codigo;
+                resultadoLogin = recuperarCuenta.GuardarCodigo(usuario);
+            }
 
-            if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
+            if (resultadoLogin != null && resultadoLogin == true)
             {
                 MailMessage mail = new();
 
@@ -146,13 +154,23 @@ namespace EducaciontItSabados.Controllers
             return mensaje;
         }
 
-        public async Task<IActionResult> CambiarClave(LoginDto login)
+        public async Task<IActionResult> CambiarClave(LoginDto loginDto)
         {
-            var baseApi = new BaseApi(_httpClient);
-            var token = HttpContext.Session.GetString("Token");
-            var response = await baseApi.PostToApi("RecuperarCuenta/CambiarClave", login, token);
-            var resultadoLogin = response as OkObjectResult;
-            if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
+
+
+            var recuperarCuenta = new RecuperarCuentaService();
+            var usuario = recuperarCuenta.BuscarUsuarios(loginDto);
+            var resultadoLogin = false;
+            if (usuario != null)
+            {
+                var usuarioDto = new UsuarioDto();
+                usuarioDto = usuario;
+                usuarioDto.Codigo = null;
+                usuarioDto.Clave = EncryptHelper.Encriptar(loginDto.Clave);
+                resultadoLogin = recuperarCuenta.GuardarCodigo(usuarioDto);
+            }
+
+            if (resultadoLogin != null && resultadoLogin == true)
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -163,15 +181,14 @@ namespace EducaciontItSabados.Controllers
             }
         }
 
-        public async Task<IActionResult> CrearUsuarioLogin(Usuarios usuario)
+        public async Task<IActionResult> CrearUsuarioLogin(CrearCuentaDto usuario)
         {
             var baseApi = new BaseApi(_httpClient);
-            usuario.Id_Rol = 2;
-            var token = HttpContext.Session.GetString("Token");
-            var response = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
+            var response = await baseApi.PostToApi("Usuarios/CrearCuenta", usuario);
             var resultadoLogin = response as OkObjectResult;
             if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
             {
+                TempData["ErrorLogin"] = "Se creo el usuario correctamente";
                 return RedirectToAction("Login", "Login");
             }
             else
@@ -208,11 +225,11 @@ namespace EducaciontItSabados.Controllers
 
             if (usuario != null)
             {
-                var baseApi = new BaseApi(_httpClient);
-                var token = await baseApi.PostToApi("Authenticate/LoginGoogle", login, "");
-                var resultadoLogin = token as OkObjectResult;
+                var authenticate = new AuthenticateController(_configuration);
 
-                var resultadoSplit = resultadoLogin.Value.ToString().Split(";");
+                var token = authenticate.LoginGoogle(login);
+
+                var resultadoSplit = token.ToString().Split(";");
                 ViewBag.NombreUsuario = resultadoSplit[1];
                 HttpContext.Session.SetString("Token", resultadoSplit[0]);
                 var homeViewModel = new HomeViewModel();

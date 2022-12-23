@@ -1,5 +1,6 @@
 ﻿using Common.Helpers;
 using Data.Base;
+using Data.Dtos;
 using Data.Entities;
 using EducaciontItSabados.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace EducaciontItSabados.Controllers
             return View();
         }
 
-        public async Task<IActionResult> UsuariosAddPartial([FromBody] Usuarios usuario)
+        public async Task<IActionResult> UsuariosAddPartial([FromBody] UsuarioDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var usuViewModel = new UsuariosViewModel();
@@ -31,10 +32,10 @@ namespace EducaciontItSabados.Controllers
             var roles = await baseApi.GetToApi("Roles/BuscarRoles", token);
             var resultadoRoles = roles as OkObjectResult;
 
-            if (usuario != null)
+            if (usuarioDto != null)
             {
-                usuario.Clave = EncryptHelper.Desencriptar(usuario.Clave);
-                usuViewModel = usuario;
+                usuarioDto.Clave = EncryptHelper.Desencriptar(usuarioDto.Clave);
+                usuViewModel = usuarioDto;
                
             }
                 
@@ -53,20 +54,20 @@ namespace EducaciontItSabados.Controllers
             return PartialView("~/Views/Usuarios/Partial/UsuariosAddPartial.cshtml", usuViewModel);
         }
 
-        public async Task<IActionResult> GuardarUsuario(Usuarios usuario)
+        public async Task<IActionResult> GuardarUsuario(UsuarioDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
+            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuarioDto, token);
             return RedirectToAction("Usuarios", "Usuarios");
         }
 
-        public async Task<IActionResult> EliminarUsuario([FromBody] Usuarios usuario)
+        public async Task<IActionResult> EliminarUsuario([FromBody] UsuarioDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            usuario.Activo = false;
-            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuario, token);
+            usuarioDto.Activo = false;
+            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuarioDto, token);
             return RedirectToAction("Usuarios", "Usuarios");
         }
     }

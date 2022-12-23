@@ -15,8 +15,7 @@ namespace EducaciontItSabados.Services
 		}
 		public async Task<Usuarios> BuscarUsuario(LoginDto usuario)
 		{
-			var result = await _manager.BuscarUsuarioGoogleAsync(usuario);
-			return result;
+            return await _manager.BuscarUsuarioGoogleAsync(usuario);
 		}
 	}
 }

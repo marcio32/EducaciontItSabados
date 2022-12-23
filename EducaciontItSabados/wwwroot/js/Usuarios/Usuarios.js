@@ -18,7 +18,6 @@ $(document).ready(function () {
                     return moment(row.fecha_Nacimiento).format("DD/MM/YYYY")
                 }, title: 'Fecha de nacimiento'
             },
-            { data: 'clave', title: 'Clave' },
             { data: 'mail', title: 'Mail' },
             { data: 'roles.nombre', title: 'Rol' },
             {

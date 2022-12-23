@@ -1,5 +1,6 @@
 ﻿using Api.Interfaces;
 using Common.Helpers;
+using Data.Dtos;
 using Data.Entities;
 using Data.Manager;
 
@@ -16,41 +17,22 @@ namespace Api.Services
 
         public async Task<List<Roles>> BuscarRolesAsync()
         {
-            try
-            {
-                var result = await _manager.BuscarListaAsync();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return await _manager.BuscarListaAsync();
         }
 
-        public async Task<List<Roles>> GuardarRolASync(Roles rol)
+        public async Task<bool> GuardarRolASync(RolesDto rolDto)
         {
-            try
-            {
-                var result = await _manager.Guardar(rol, rol.Id);
-                return await _manager.BuscarListaAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            var rol = new Roles();
+            rol = rolDto;
+            return await _manager.Guardar(rol, rol.Id);
         }
 
-        public async Task<List<Roles>> EliminarRolASync(Roles rol)
+        public async Task<bool> EliminarRolASync(RolesDto rolDto)
         {
-            try
-            {
-                var result = await _manager.Eliminar(rol);
-                return await _manager.BuscarListaAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var rol = new Roles();
+            rol = rolDto;
+            return await _manager.Eliminar(rol);
 
         }
     }

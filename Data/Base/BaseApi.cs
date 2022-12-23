@@ -10,64 +10,51 @@ using System.Threading.Tasks;
 
 namespace Data.Base
 {
-	public class BaseApi : ControllerBase
-	{
-		private readonly IHttpClientFactory _httpClient;
-		public BaseApi(IHttpClientFactory httpClient)
-		{
-			_httpClient = httpClient;
-		}
+    public class BaseApi : ControllerBase
+    {
+        private readonly IHttpClientFactory _httpClient;
+        public BaseApi(IHttpClientFactory httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
-		public async Task<IActionResult> PostToApi(string ControllerMethodUrl, object model, string token)
-		{
-			try
-			{
-				var client = _httpClient.CreateClient("useApi");
+        public async Task<IActionResult> PostToApi(string ControllerMethodUrl, object model, string token = "")
+        {
+            var client = _httpClient.CreateClient("useApi");
 
-				if(token != "")
-				{
-					client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+            if (token != "")
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
-                }
+            }
 
-				var response = await client.PostAsJsonAsync(ControllerMethodUrl, model);
-				if (response.IsSuccessStatusCode)
-				{
-					var content = await response.Content.ReadAsStringAsync();
-					return Ok(content);
-				}
-				return BadRequest(response);
-			}
-			catch(Exception ex)
-			{
-				return BadRequest(ex.Message);
-			}
-		}
+            var response = await client.PostAsJsonAsync(ControllerMethodUrl, model);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return Ok(content);
+            }
+            return BadRequest(response);
+        }
 
         public async Task<IActionResult> GetToApi(string ControllerMethodUrl, string token)
         {
-            try
+
+            var client = _httpClient.CreateClient("useApi");
+
+            if (token != "")
             {
-                var client = _httpClient.CreateClient("useApi");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
-                if (token != "")
-				{
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
-                }
-
-                var response = await client.GetAsync(ControllerMethodUrl);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return Ok(content);
-                }
-                return BadRequest(response);
             }
-            catch (Exception ex)
+
+            var response = await client.GetAsync(ControllerMethodUrl);
+            if (response.IsSuccessStatusCode)
             {
-                return BadRequest(ex.Message);
+                var content = await response.Content.ReadAsStringAsync();
+                return Ok(content);
             }
+            return BadRequest(response);
         }
     }
 }

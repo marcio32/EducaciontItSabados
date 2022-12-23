@@ -1,11 +1,13 @@
-﻿using Data.Entities;
+﻿using Data.Dtos;
+using Data.Entities;
 
 namespace Api.Interfaces
 {
     public interface IUsuariosService
     {
         Task<List<Usuarios>> BuscarUsuariosAsync();
-        Task<List<Usuarios>> GuardarUsuarioASync(Usuarios usuario);
-        Task<List<Usuarios>> EliminarUsuarioASync(Usuarios usuario);
+        Task<bool> GuardarUsuarioASync(UsuarioDto usuario);
+        Task<bool> GuardarUsuarioASync(CrearCuentaDto usuario);
+        Task<List<Usuarios>> EliminarUsuarioASync(UsuarioDto usuario);
     }
 }

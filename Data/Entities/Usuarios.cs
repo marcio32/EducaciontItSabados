@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Dtos;
+using System.Text.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,8 +21,33 @@ namespace Data.Entities
         public int Id_Rol { get; set; }
         public bool Activo { get; set; }
         public int? Codigo { get; set; }
-        public Roles? Roles { get; set; }  
-        
+        public Roles? Roles { get; set; }
 
+        public static implicit operator Usuarios(CrearCuentaDto crearCuenta)
+        {
+            var usuario = new Usuarios();
+            usuario.Nombre = crearCuenta.Nombre;
+            usuario.Apellido = crearCuenta.Apellido;
+            usuario.Fecha_Nacimiento = crearCuenta.Fecha_Nacimiento;
+            usuario.Clave = crearCuenta.Clave;
+            usuario.Mail = crearCuenta.Mail;
+            usuario.Id_Rol = crearCuenta.Id_Rol;
+            usuario.Activo = crearCuenta.Activo;
+            return usuario;
+        }
+
+        public static implicit operator Usuarios(UsuarioDto usuarioDto)
+        {
+            var usuario = new Usuarios();
+            usuario.Id = usuarioDto.Id;
+            usuario.Nombre = usuarioDto.Nombre;
+            usuario.Apellido = usuarioDto.Apellido;
+            usuario.Fecha_Nacimiento = usuarioDto.Fecha_Nacimiento;
+            usuario.Clave = usuarioDto.Clave;
+            usuario.Mail = usuarioDto.Mail;
+            usuario.Id_Rol = usuarioDto.Id_Rol;
+            usuario.Activo = usuarioDto.Activo;
+            return usuario;
+        }
     }
 }

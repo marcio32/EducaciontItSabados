@@ -1,5 +1,6 @@
 ﻿using Api.Interfaces;
 using Common.Helpers;
+using Data.Dtos;
 using Data.Entities;
 using Data.Manager;
 
@@ -16,50 +17,55 @@ namespace Api.Services
 
         public async Task<List<Usuarios>> BuscarUsuariosAsync()
         {
-            try
-            {
-                var result = await _manager.BuscarListaAsync();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return await _manager.BuscarListaAsync();
+
         }
 
-        public async Task<List<Usuarios>> GuardarUsuarioASync(Usuarios usuario)
+        public async Task<bool> GuardarUsuarioASync(UsuarioDto usuarioDto)
         {
-            try
+            var usuario = new Usuarios();
+            usuario = usuarioDto;
+            var existe = await _manager.BuscarUsuarioAsync(usuario);
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
+            if (existe != null && usuarioDto.Id == 0)
             {
-                var existe = await _manager.BuscarUsuarioAsync(usuario);
-                usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-                if (existe != null)
-                {
-                    return await _manager.BuscarListaAsync();
-                }
-                else
-                {
-                    var result = await _manager.Guardar(usuario, usuario.Id);
-                }
-                return await _manager.BuscarListaAsync();
+                return false;
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                var result = await _manager.Guardar(usuario, usuario.Id);
             }
+            return true;
+
         }
 
-        public async Task<List<Usuarios>> EliminarUsuarioASync(Usuarios usuario)
+        public async Task<bool> GuardarUsuarioASync(CrearCuentaDto usuarioDto)
         {
-            try
+
+            var usuario = new Usuarios();
+            usuario = usuarioDto;
+            var existe = await _manager.BuscarUsuarioAsync(usuario);
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
+            if (existe != null)
             {
-                var result = await _manager.Eliminar(usuario);
-                return await _manager.BuscarListaAsync();
+                return false;
             }
-              catch (Exception ex)
+            else
             {
-                throw ex;
+                var result = await _manager.Guardar(usuario, usuario.Id);
             }
+            return true;
+
+        }
+
+        public async Task<List<Usuarios>> EliminarUsuarioASync(UsuarioDto usuarioDto)
+        {
+
+            var usuario = new Usuarios();
+            usuario = usuarioDto;
+            var result = await _manager.Eliminar(usuario);
+            return await _manager.BuscarListaAsync();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Api.Interfaces;
 using Common.Helpers;
+using Data.Dtos;
 using Data.Entities;
 using Data.Manager;
 
@@ -16,42 +17,23 @@ namespace Api.Services
 
         public async Task<List<Productos>> BuscarProductosAsync()
         {
-            try
-            {
-                var result = await _manager.BuscarListaAsync();
-                return result;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            return await _manager.BuscarListaAsync();
         }
 
-        public async Task<List<Productos>> GuardarProductoASync(Productos producto)
+        public async Task<bool> GuardarProductoASync(ProductosDto productoDto)
         {
-            try
-            {
-                var result = await _manager.Guardar(producto, producto.Id);
-                return await _manager.BuscarListaAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var producto = new Productos();
+            producto = productoDto;
 
+            return await _manager.Guardar(producto, producto.Id);
         }
 
-        public async Task<List<Productos>> EliminarProductoASync(Productos producto)
+        public async Task<bool> EliminarProductoASync(ProductosDto productoDto)
         {
-            try
-            {
-                var result = await _manager.Eliminar(producto);
-                return await _manager.BuscarListaAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var producto = new Productos();
+            producto = productoDto;
+
+            return await _manager.Eliminar(producto);
 
         }
     }

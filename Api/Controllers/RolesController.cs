@@ -1,4 +1,5 @@
 ﻿using Api.Services;
+using Data.Dtos;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("GuardarRol")]
-        public async Task<List<Roles>> GuardarRol(Roles roles)
+        public async Task<bool> GuardarRol(RolesDto roles)
         {
             var guardarRol = new RolesService();
             return await guardarRol.GuardarRolASync(roles);
@@ -29,7 +30,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("EliminarRol")]
-        public async Task<List<Roles>> EliminarRol(Roles roles)
+        public async Task<bool> EliminarRol(RolesDto roles)
         {
             var guardarRol = new RolesService();
             return await guardarRol.EliminarRolASync(roles);

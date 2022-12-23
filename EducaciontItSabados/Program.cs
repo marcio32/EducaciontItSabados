@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
+using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +75,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
