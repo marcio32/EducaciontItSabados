@@ -1,0 +1,49 @@
+﻿@model int
+
+
+<div class="row justify-content-center">
+    <div class="text-center"><h1>Chat Online Educacion It</h1></div>
+    <div class="mb-2">
+        <input class="form-control mb-1" type="text" placeholder="Introduzca su Usuario" id="usuario"/>
+        <input class="form-control" type="text" placeholder="Introduzca su Mensaje" id="mensaje"/>
+        <div>
+            <button class="btn btn-success mt-2" type="button" id="btnEnviar">Enviar</button>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <ul class="list-group" id="mensajes"></ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            var conexion = new signalR.HubConnectionBuilder().withUrl("/Chat").build();
+
+                conexion.start().then(()=> {conexion.invoke("AgregarAlGrupo", "@Model")});
+
+            $("#btnEnviar").click(function(e){
+                var room = @Model;
+                var usuario = $("#usuario").val();
+                var mensaje = $("#mensaje").val();
+                conexion.invoke("EnviarMensaje", room, usuario, mensaje);
+                $("#mensaje").val("");
+                $("#mensaje").focus();
+                e.preventDefault();
+            });
+
+            conexion.on("RecibirMensaje", (usuario, mensaje) => {
+                var li = $("<li>", {"class": "list-group-item"});
+                var small = $("<small>", {"text": usuario + "  -  "});
+                li.append(small);
+                li.append(mensaje);
+                $("#mensajes").append(li);
+            });
+
+
+        });
+    </script>
+}
