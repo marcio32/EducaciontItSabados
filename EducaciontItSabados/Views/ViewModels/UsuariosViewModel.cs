@@ -17,7 +17,7 @@ namespace EducaciontItSabados.ViewModels
         public int Codigo { get; set; }
         public IEnumerable<SelectListItem> Lista_Roles { get; set; }
 
-        public static implicit operator UsuariosViewModel(UsuarioDto usuario)
+        public static implicit operator UsuariosViewModel(UsuariosDto usuario)
         {
             var usuViewModel = new UsuariosViewModel();
             usuViewModel.Id = usuario.Id;

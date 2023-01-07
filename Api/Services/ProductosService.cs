@@ -24,7 +24,6 @@ namespace Api.Services
         {
             var producto = new Productos();
             producto = productoDto;
-
             return await _manager.Guardar(producto, producto.Id);
         }
 
@@ -32,7 +31,6 @@ namespace Api.Services
         {
             var producto = new Productos();
             producto = productoDto;
-
             return await _manager.Eliminar(producto);
 
         }

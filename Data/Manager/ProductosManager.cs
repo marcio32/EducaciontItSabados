@@ -11,12 +11,12 @@ namespace Data.Manager
 {
     public class ProductosManager : BaseManager<Productos>
     {
-        public override Task<bool> Borrar(Productos entity)
+        public override Task<bool> Borrar(Productos producto)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<List<Productos>> BuscarAsync(Productos entity)
+        public override Task<List<Productos>> BuscarAsync(Productos producto)
         {
             throw new NotImplementedException();
         }

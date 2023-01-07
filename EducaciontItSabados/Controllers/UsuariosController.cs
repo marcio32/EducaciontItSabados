@@ -24,7 +24,7 @@ namespace EducaciontItSabados.Controllers
             return View();
         }
 
-        public async Task<IActionResult> UsuariosAddPartial([FromBody] UsuarioDto usuarioDto)
+        public async Task<IActionResult> UsuariosAddPartial([FromBody] UsuariosDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var usuViewModel = new UsuariosViewModel();
@@ -54,7 +54,7 @@ namespace EducaciontItSabados.Controllers
             return PartialView("~/Views/Usuarios/Partial/UsuariosAddPartial.cshtml", usuViewModel);
         }
 
-        public async Task<IActionResult> GuardarUsuario(UsuarioDto usuarioDto)
+        public async Task<IActionResult> GuardarUsuario(UsuariosDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
@@ -62,7 +62,7 @@ namespace EducaciontItSabados.Controllers
             return RedirectToAction("Usuarios", "Usuarios");
         }
 
-        public async Task<IActionResult> EliminarUsuario([FromBody] UsuarioDto usuarioDto)
+        public async Task<IActionResult> EliminarUsuario([FromBody] UsuariosDto usuarioDto)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);

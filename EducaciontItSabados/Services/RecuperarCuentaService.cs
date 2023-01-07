@@ -15,12 +15,12 @@ namespace Web.Services
         {
             _manager = new RecuperarCuentaManager();
         }
-        public Usuarios BuscarUsuarios(LoginDto loginDto)
+        public async Task<Usuarios?> BuscarUsuarios(LoginDto loginDto)
         {
-            return _manager.BuscarAsync(loginDto);
+            return await _manager.BuscarAsync(loginDto);
         }
 
-        public bool GuardarCodigo(UsuarioDto usuarioDto)
+        public bool GuardarCodigo(UsuariosDto usuarioDto)
         {
             var usuario = new Usuarios();
             usuario = usuarioDto;

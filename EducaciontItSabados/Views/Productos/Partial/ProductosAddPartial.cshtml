@@ -7,7 +7,7 @@
                 <h5 class="modal-title" id="exampleModalCenterTitle">Alta y/o modificación de Productos.</h5>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("GuardarProducto", "Productos", FormMethod.Post, new {enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("GuardarProducto", "/Productos", FormMethod.Post, new {enctype = "multipart/form-data" }))
                 {
                  @Html.HiddenFor(x=> x.Id)
                  @Html.HiddenFor(x=> x.Imagen)

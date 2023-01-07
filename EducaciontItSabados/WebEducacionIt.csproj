@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ViewModels\ErrorViewModel.cs" />
-    <Content Include="ViewModels\ProductosViewModel.cs" />
-    <Content Include="ViewModels\RolesViewModel.cs" />
-    <Content Include="ViewModels\UsuariosViewModel.cs" />
+    <Content Include="Views\ViewModels\ErrorViewModel.cs" />
+    <Content Include="Views\ViewModels\ProductosViewModel.cs" />
+    <Content Include="Views\ViewModels\RolesViewModel.cs" />
+    <Content Include="Views\ViewModels\UsuariosViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

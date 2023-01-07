@@ -22,28 +22,28 @@ namespace Api.Controllers
         [Authorize]
         [HttpPost]
         [Route("GuardarUsuario")]
-        public async Task<bool> GuardarUsuario(UsuarioDto usuarios)
+        public async Task<bool> GuardarUsuario(UsuariosDto usuariosDto)
         {
             var guardarUsuario = new UsuariosService();
-            return await guardarUsuario.GuardarUsuarioASync(usuarios);
+            return await guardarUsuario.GuardarUsuarioASync(usuariosDto);
         }
 
         [AllowAnonymous]
         [HttpPost]
         [Route("CrearCuenta")]
-        public async Task<bool> CrearCuenta(CrearCuentaDto crearCuenta)
+        public async Task<bool> CrearCuenta(CrearCuentaDto crearCuentaDto)
         {
             var guardarUsuario = new UsuariosService();
-            return await guardarUsuario.GuardarUsuarioASync(crearCuenta);
+            return await guardarUsuario.GuardarUsuarioASync(crearCuentaDto);
         }
 
         [Authorize]
         [HttpPost]
         [Route("EliminarUsuario")]
-        public async Task<List<Usuarios>> EliminarUsuario(UsuarioDto usuarios)
+        public async Task<bool> EliminarUsuario(UsuariosDto usuariosDto)
         {
             var guardarUsuario = new UsuariosService();
-            return await guardarUsuario.EliminarUsuarioASync(usuarios);
+            return await guardarUsuario.EliminarUsuarioASync(usuariosDto);
         }
 
 

@@ -7,7 +7,7 @@
                 <h5 class="modal-title" id="exampleModalCenterTitle">Alta y/o modificación de Servicios.</h5>
             </div>
             <div class="modal-body">
-             @using (Html.BeginForm("GuardarServicio", "Servicios", FormMethod.Post))
+             @using (Html.BeginForm("GuardarServicio", "/Servicios", FormMethod.Post))
              {
                  @Html.HiddenFor(x=> x.Id)
                  <div class="row">

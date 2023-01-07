@@ -22,18 +22,18 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("GuardarRol")]
-        public async Task<bool> GuardarRol(RolesDto roles)
+        public async Task<bool> GuardarRol(RolesDto rolesDto)
         {
             var guardarRol = new RolesService();
-            return await guardarRol.GuardarRolASync(roles);
+            return await guardarRol.GuardarRolASync(rolesDto);
         }
 
         [HttpPost]
         [Route("EliminarRol")]
-        public async Task<bool> EliminarRol(RolesDto roles)
+        public async Task<bool> EliminarRol(RolesDto rolesDto)
         {
             var guardarRol = new RolesService();
-            return await guardarRol.EliminarRolASync(roles);
+            return await guardarRol.EliminarRolASync(rolesDto);
         }
 
 

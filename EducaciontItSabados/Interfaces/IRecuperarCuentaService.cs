@@ -5,7 +5,7 @@ namespace EducaciontItSabados.Interfaces
 {
     public interface IRecuperarCuentaService
     {
-        Usuarios BuscarUsuarios(LoginDto loginDto);
-        bool GuardarCodigo(UsuarioDto usuarioDto);
+        Task<Usuarios?> BuscarUsuarios(LoginDto loginDto);
+        bool GuardarCodigo(UsuariosDto usuarioDto);
     }
 }

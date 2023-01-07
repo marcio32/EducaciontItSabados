@@ -30,10 +30,10 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("EliminarServicio")]
-        public async Task<bool> EliminarServicio(ServiciosDto serviciosDto)
+        public bool EliminarServicio(ServiciosDto serviciosDto)
         {
             var guardarServicio = new ServiciosService();
-            return await guardarServicio.EliminarServicioASync(serviciosDto);
+            return guardarServicio.EliminarServicioASync(serviciosDto);
         }
 
 

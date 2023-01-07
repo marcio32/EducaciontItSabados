@@ -12,20 +12,16 @@ namespace Data.Manager
 {
 	public class RecuperarCuentaManager : BaseManager<Usuarios>
 	{
-
-
-        public Usuarios BuscarAsync(LoginDto usuario)
+        public async Task<Usuarios?> BuscarAsync(LoginDto loginDto)
         {
-
-			if(usuario.Clave != null)
+			if(loginDto.Clave != null)
 			{
-                return contextSingleton.Usuarios.Where(x => x.Codigo == usuario.Codigo).FirstOrDefault();
+                return await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Codigo == loginDto.Codigo);
 			}
 			else
 			{
-                return contextSingleton.Usuarios.Where(x => x.Mail == usuario.Mail).FirstOrDefault();
+                return await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == loginDto.Mail);
             }
-
         }
 
         public override Task<bool> Borrar(Usuarios usuario)
@@ -33,7 +29,7 @@ namespace Data.Manager
 			throw new NotImplementedException();
 		}
 
-		public override Task<List<Usuarios>> BuscarAsync(Usuarios entity)
+		public override Task<List<Usuarios>> BuscarAsync(Usuarios usuario)
 		{
 			throw new NotImplementedException();
 		}

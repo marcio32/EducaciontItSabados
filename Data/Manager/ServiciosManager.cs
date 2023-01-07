@@ -1,4 +1,5 @@
 ﻿using Data.Base;
+using Data.Dtos;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,21 +12,19 @@ namespace Data.Manager
 {
     public class ServiciosManager : BaseManager<Servicios>
     {
-        public async override Task<bool> Borrar(Servicios servicio)
+        public bool Borrar(ServiciosDto servicio)
         {
-            var respuesta = contextSingleton.Database.ExecuteSqlRaw($"EliminarServicio {servicio.Id}");
-            return respuesta == 1 ? true : false;
+            return contextSingleton.Database.ExecuteSqlRaw($"EliminarServicio {servicio.Id}") > 0;
         }
 
-        public override Task<List<Servicios>> BuscarAsync(Servicios entity)
+        public override Task<List<Servicios>> BuscarAsync(Servicios servicio)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> GuardarAsync (Servicios servicio)
+        public async Task<bool> GuardarAsync (ServiciosDto servicio)
         {
-            var respuesta = contextSingleton.Database.ExecuteSqlRaw($"GuardaroActualizarServicios {servicio.Id}, {servicio.Nombre}, {servicio.Activo}");
-            return respuesta == 1 ? true : false;
+            return contextSingleton.Database.ExecuteSqlRaw($"GuardaroActualizarServicios {servicio.Id}, {servicio.Nombre}, {servicio.Activo}") > 0;
         }
 
         public async override Task<List<Servicios>> BuscarListaAsync()
@@ -33,5 +32,9 @@ namespace Data.Manager
             return contextSingleton.Servicios.FromSqlRaw("ObtenerServicios").ToList();
         }
 
+        public override Task<bool> Borrar(Servicios entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

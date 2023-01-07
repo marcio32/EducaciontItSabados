@@ -18,7 +18,7 @@ namespace Data.Base
             _httpClient = httpClient;
         }
 
-        public async Task<IActionResult> PostToApi(string ControllerMethodUrl, object model, string token = "")
+        public async Task<IActionResult> PostToApi(string metodoController, object model, string token = "")
         {
             var client = _httpClient.CreateClient("useApi");
 
@@ -28,7 +28,7 @@ namespace Data.Base
 
             }
 
-            var response = await client.PostAsJsonAsync(ControllerMethodUrl, model);
+            var response = await client.PostAsJsonAsync(metodoController, model);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -37,7 +37,7 @@ namespace Data.Base
             return BadRequest(response);
         }
 
-        public async Task<IActionResult> GetToApi(string ControllerMethodUrl, string token)
+        public async Task<IActionResult> GetToApi(string metodoController, string token)
         {
 
             var client = _httpClient.CreateClient("useApi");
@@ -45,10 +45,9 @@ namespace Data.Base
             if (token != "")
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
             }
 
-            var response = await client.GetAsync(ControllerMethodUrl);
+            var response = await client.GetAsync(metodoController);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

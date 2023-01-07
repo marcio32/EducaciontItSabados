@@ -22,18 +22,18 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("GuardarProducto")]
-        public async Task<bool> GuardarProducto(ProductosDto productos)
+        public async Task<bool> GuardarProducto(ProductosDto productosDto)
         {
             var guardarProducto = new ProductosService();
-            return await guardarProducto.GuardarProductoASync(productos);
+            return await guardarProducto.GuardarProductoASync(productosDto);
         }
 
         [HttpPost]
         [Route("EliminarProducto")]
-        public async Task<bool> EliminarProducto(ProductosDto productos)
+        public async Task<bool> EliminarProducto(ProductosDto productosDto)
         {
             var guardarProducto = new ProductosService();
-            return await guardarProducto.EliminarProductoASync(productos);
+            return await guardarProducto.EliminarProductoASync(productosDto);
         }
 
 

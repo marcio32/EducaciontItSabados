@@ -53,10 +53,10 @@ namespace EducaciontItSabados.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Ingresar(LoginDto login)
+        public async Task<IActionResult> Ingresar(LoginDto loginDto)
         {
             var baseApi = new BaseApi(_httpClient);
-            var token = await baseApi.PostToApi("Authenticate/Login", login, "");
+            var token = await baseApi.PostToApi("Authenticate/Login", loginDto, "");
             var resultadoLogin = token as OkObjectResult;
 
             if (resultadoLogin != null)
@@ -83,6 +83,7 @@ namespace EducaciontItSabados.Controllers
 
                 var homeViewModel = new HomeViewModel();
                 homeViewModel.Token = resultadoSplit[0];
+                homeViewModel.AjaxUrl = _configuration["Url:AjaxUrl"];
                 return View("~/Views/Home/Index.cshtml", homeViewModel);
             }
             else
@@ -98,7 +99,7 @@ namespace EducaciontItSabados.Controllers
             return RedirectToAction("Login", "Login");
         }
 
-        public async Task<IActionResult> EnviarMail(LoginDto login)
+        public async Task<IActionResult> EnviarMail(LoginDto loginDto)
         {
             var guid = Guid.NewGuid();
             var numeros = new String(guid.ToString().Where(Char.IsDigit).ToArray());
@@ -106,14 +107,14 @@ namespace EducaciontItSabados.Controllers
             var random = new Random(seed);
             var codigo = random.Next(000000, 999999);
 
-            login.Codigo = codigo;
+            loginDto.Codigo = codigo;
 
             var recuperarCuenta = new RecuperarCuentaService();
-            var usuario = recuperarCuenta.BuscarUsuarios(login);
+            var usuario = await recuperarCuenta.BuscarUsuarios(loginDto);
             var resultadoLogin = false;
             if (usuario != null)
             {
-                usuario.Codigo = login.Codigo;
+                usuario.Codigo = loginDto.Codigo;
                 resultadoLogin = recuperarCuenta.GuardarCodigo(usuario);
             }
 
@@ -124,7 +125,7 @@ namespace EducaciontItSabados.Controllers
                 string CuerpoMail = CuerpoMailLogin(codigo);
 
                 mail.From = new MailAddress(_configuration["ConfiguracionMail:Usuario"]);
-                mail.To.Add(login.Mail);
+                mail.To.Add(loginDto.Mail);
                 mail.Subject = "Codigo Recuperacion";
                 mail.Body = CuerpoMail;
                 mail.IsBodyHtml = true;
@@ -159,11 +160,11 @@ namespace EducaciontItSabados.Controllers
 
 
             var recuperarCuenta = new RecuperarCuentaService();
-            var usuario = recuperarCuenta.BuscarUsuarios(loginDto);
+            var usuario = await recuperarCuenta.BuscarUsuarios(loginDto);
             var resultadoLogin = false;
             if (usuario != null)
             {
-                var usuarioDto = new UsuarioDto();
+                var usuarioDto = new UsuariosDto();
                 usuarioDto = usuario;
                 usuarioDto.Codigo = null;
                 usuarioDto.Clave = EncryptHelper.Encriptar(loginDto.Clave);
@@ -181,10 +182,10 @@ namespace EducaciontItSabados.Controllers
             }
         }
 
-        public async Task<IActionResult> CrearUsuarioLogin(CrearCuentaDto usuario)
+        public async Task<IActionResult> CrearUsuarioLogin(CrearCuentaDto crearCuentaDto)
         {
             var baseApi = new BaseApi(_httpClient);
-            var response = await baseApi.PostToApi("Usuarios/CrearCuenta", usuario);
+            var response = await baseApi.PostToApi("Usuarios/CrearCuenta", crearCuentaDto);
             var resultadoLogin = response as OkObjectResult;
             if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
             {

@@ -36,7 +36,7 @@ namespace Data.Entities
             return usuario;
         }
 
-        public static implicit operator Usuarios(UsuarioDto usuarioDto)
+        public static implicit operator Usuarios(UsuariosDto usuarioDto)
         {
             var usuario = new Usuarios();
             usuario.Id = usuarioDto.Id;

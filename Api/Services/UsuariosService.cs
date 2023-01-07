@@ -21,51 +21,41 @@ namespace Api.Services
 
         }
 
-        public async Task<bool> GuardarUsuarioASync(UsuarioDto usuarioDto)
+        public async Task<bool> GuardarUsuarioASync(UsuariosDto usuarioDto)
         {
-            var usuario = new Usuarios();
-            usuario = usuarioDto;
-            var existe = await _manager.BuscarUsuarioAsync(usuario);
-            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-            if (existe != null && usuarioDto.Id == 0)
+            if (await _manager.BuscarUsuarioAsync(usuarioDto) != null && usuarioDto.Id == 0)
             {
                 return false;
             }
             else
             {
-                var result = await _manager.Guardar(usuario, usuario.Id);
+                var usuario = new Usuarios();
+                usuario = usuarioDto;
+                usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
+                return await _manager.Guardar(usuario, usuario.Id);
             }
-            return true;
-
         }
 
-        public async Task<bool> GuardarUsuarioASync(CrearCuentaDto usuarioDto)
+        public async Task<bool> GuardarUsuarioASync(CrearCuentaDto crearCuentaDto)
         {
-
-            var usuario = new Usuarios();
-            usuario = usuarioDto;
-            var existe = await _manager.BuscarUsuarioAsync(usuario);
-            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-            if (existe != null)
+            if (await _manager.BuscarUsuarioAsync(crearCuentaDto) != null)
             {
                 return false;
             }
             else
             {
-                var result = await _manager.Guardar(usuario, usuario.Id);
+                var usuario = new Usuarios();
+                usuario = crearCuentaDto;
+                usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
+                return await _manager.Guardar(usuario, usuario.Id);
             }
-            return true;
-
         }
 
-        public async Task<List<Usuarios>> EliminarUsuarioASync(UsuarioDto usuarioDto)
+        public async Task<bool> EliminarUsuarioASync(UsuariosDto usuarioDto)
         {
-
             var usuario = new Usuarios();
             usuario = usuarioDto;
-            var result = await _manager.Eliminar(usuario);
-            return await _manager.BuscarListaAsync();
-
+            return await _manager.Eliminar(usuario);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace EducaciontItSabados.Interfaces
 {
     public interface IUsuarioService
     {
-        Task<Usuarios> BuscarUsuario(LoginDto login);
+        Task<Usuarios> BuscarUsuario(LoginDto loginDto);
     }
 }

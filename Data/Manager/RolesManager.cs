@@ -11,12 +11,12 @@ namespace Data.Manager
 {
     public class RolesManager : BaseManager<Roles>
     {
-        public override Task<bool> Borrar(Roles entity)
+        public override Task<bool> Borrar(Roles rol)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<List<Roles>> BuscarAsync(Roles entity)
+        public override Task<List<Roles>> BuscarAsync(Roles rol)
         {
             throw new NotImplementedException();
         }

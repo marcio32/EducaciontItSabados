@@ -29,10 +29,10 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login(LoginDto usuario)
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == usuario.Mail && x.Clave == usuario.Clave).Include(x => x.Roles).FirstOrDefault();
+            loginDto.Clave = EncryptHelper.Encriptar(loginDto.Clave);
+            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == loginDto.Mail && x.Clave == loginDto.Clave).Include(x => x.Roles).FirstOrDefault();
 
             if (validarUsuario != null)
             {
@@ -53,20 +53,20 @@ namespace Api.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public string LoginGoogle(LoginDto usuario)
+        public string LoginGoogle(LoginDto loginDto)
         {
-            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == usuario.Mail).Include(x => x.Roles).FirstOrDefault();
+            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == loginDto.Mail).Include(x => x.Roles).FirstOrDefault();
 
             if (validarUsuario != null)
             {
-                var Claims = new List<Claim>
+                var claim = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, validarUsuario.Mail),
                     new Claim(ClaimTypes.DateOfBirth, validarUsuario.Fecha_Nacimiento.ToString()),
                     new Claim(ClaimTypes.Role, validarUsuario.Roles.Nombre),
                 };
 
-                var token = CrearToken(Claims);
+                var token = CrearToken(claim);
                 return new JwtSecurityTokenHandler().WriteToken(token).ToString() + ";" + validarUsuario.Nombre + ";" + validarUsuario.Roles.Nombre + ";" + validarUsuario.Mail;
             }
             else
@@ -76,13 +76,13 @@ namespace Api.Controllers
         }
 
 
-        private JwtSecurityToken CrearToken(List<Claim> autorizar)
+        private JwtSecurityToken CrearToken(List<Claim> claim)
         {
             var firma = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Firma"]));
 
             var token = new JwtSecurityToken(
                 expires: DateTime.Now.AddHours(24),
-                claims: autorizar,
+                claims: claim,
                 signingCredentials: new SigningCredentials(firma, SecurityAlgorithms.HmacSha256)
                 );
 

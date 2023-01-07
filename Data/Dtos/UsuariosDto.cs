@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Dtos
 {
-    public class UsuarioDto
+    public class UsuariosDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -20,9 +20,9 @@ namespace Data.Dtos
         public bool Activo { get; set; }
         public int? Codigo { get; set; }
 
-        public static implicit operator UsuarioDto(Usuarios usuario)
+        public static implicit operator UsuariosDto(Usuarios usuario)
         {
-            var usuarioDto = new UsuarioDto();
+            var usuarioDto = new UsuariosDto();
             usuarioDto.Id = usuario.Id;
             usuarioDto.Nombre = usuario.Nombre;
             usuarioDto.Apellido = usuario.Apellido;

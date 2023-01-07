@@ -13,9 +13,9 @@ namespace EducaciontItSabados.Services
 		{
 			_manager = new UsuariosManager();
 		}
-		public async Task<Usuarios> BuscarUsuario(LoginDto usuario)
+		public async Task<Usuarios> BuscarUsuario(LoginDto loginDto)
 		{
-            return await _manager.BuscarUsuarioGoogleAsync(usuario);
+            return await _manager.BuscarUsuarioGoogleAsync(loginDto);
 		}
 	}
 }

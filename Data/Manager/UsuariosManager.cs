@@ -13,12 +13,12 @@ namespace Data.Manager
 {
     public class UsuariosManager : BaseManager<Usuarios>
     {
-        public override Task<bool> Borrar(Usuarios entity)
+        public override Task<bool> Borrar(Usuarios usuario)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<List<Usuarios>> BuscarAsync(Usuarios entity)
+        public override Task<List<Usuarios>> BuscarAsync(Usuarios usuario)
         {
             throw new NotImplementedException();
         }
@@ -28,14 +28,19 @@ namespace Data.Manager
             return await contextSingleton.Usuarios.Where(x => x.Activo == true).Include(x=> x.Roles).ToListAsync();
         }
 
-        public async Task<Usuarios> BuscarUsuarioAsync(Usuarios usuario)
+        public async Task<Usuarios> BuscarUsuarioAsync(UsuariosDto usuario)
         {
             return await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == usuario.Mail);
         }
 
-        public async Task<Usuarios> BuscarUsuarioGoogleAsync(LoginDto usuario)
+        public async Task<Usuarios> BuscarUsuarioAsync(CrearCuentaDto usuario)
         {
-            var result = await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == usuario.Mail && x.Activo == true);
+            return await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == usuario.Mail);
+        }
+
+        public async Task<Usuarios> BuscarUsuarioGoogleAsync(LoginDto LoginDto)
+        {
+            var result = await contextSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == LoginDto.Mail && x.Activo == true);
             return result;
         }
     }
