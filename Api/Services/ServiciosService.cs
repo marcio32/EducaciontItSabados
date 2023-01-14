@@ -22,7 +22,14 @@ namespace Api.Services
 
         public async Task<bool> GuardarServicioASync(ServiciosDto servicioDto)
         {
-            return await _manager.GuardarAsync(servicioDto);
+            if (BuscarServiciosAsync().Result.Where(x => x.Nombre == servicioDto.Nombre && x.Activo == true).ToList().Count > 0)
+            {
+                return false;
+            }
+            else {
+                return await _manager.GuardarAsync(servicioDto);
+            }
+           
         }
 
         public bool EliminarServicioASync(ServiciosDto servicioDto)

@@ -29,7 +29,21 @@ namespace EducaciontItSabados.Controllers
             return PartialView("~/Views/Servicios/Partial/ServiciosAddPartial.cshtml", usuViewModel);
         }
 
-		public async Task<IActionResult> GuardarServicio(ServiciosDto servicioDto)
+        public async Task<bool> SincronizarServicio(ServiciosDto servicioDto)
+        {
+            var baseApi = new BaseApi(_httpClient);
+            var token = HttpContext.Session.GetString("Token");
+
+            var oClient = new MiSoap.Service1Client();
+            var getServicios = oClient.GetServicios();
+            servicioDto.Nombre = getServicios;
+            servicioDto.Activo = true;
+            var servicios = await baseApi.PostToApi("Servicios/GuardarServicio", servicioDto, token);
+            var reultado = servicios as OkObjectResult;
+            return Convert.ToBoolean(reultado.Value.ToString());
+        }
+
+        public async Task<IActionResult> GuardarServicio(ServiciosDto servicioDto)
 		{
 			var baseApi = new BaseApi(_httpClient);
             var token = HttpContext.Session.GetString("Token");

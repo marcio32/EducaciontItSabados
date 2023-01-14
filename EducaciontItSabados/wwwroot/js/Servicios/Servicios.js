@@ -92,6 +92,23 @@ function EliminarServicio(row) {
             
         }
     })
+}
 
-    
+function SincronizarServicio() {
+    $.ajax({
+        type: "POST",
+        url: "/Servicios/SincronizarServicio",
+        contentType: "application/json",
+        success: function (resultado) {
+            debugger
+            if (!resultado) {
+                Swal.fire(
+                    'Cuidado!',
+                    'Ya existe el elemento, no se puede volver a guardar',
+                    'warning'
+                )
+            }
+            tablaServicios.ajax.reload();
+        }
+    })
 }
